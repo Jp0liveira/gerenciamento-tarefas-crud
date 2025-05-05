@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+$tarefas-angular-primary: mat.m2-define-palette(mat.$m2-blue-palette);
+$tarefas-angular-accent: mat.m2-define-palette(mat.$m2-indigo-palette, A200, A400, 700);
+$tarefas-angular-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$tarefas-angular-theme: mat.m2-define-light-theme(
+    (
+      color: (
+        primary: $tarefas-angular-primary,
+        accent: $tarefas-angular-accent,
+        warn: $tarefas-angular-warn
+      )
+    )
+);
+
+@include mat.all-component-themes($tarefas-angular-theme);
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

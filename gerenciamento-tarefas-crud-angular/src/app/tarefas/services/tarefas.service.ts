@@ -8,7 +8,7 @@ import {delay, first, tap} from 'rxjs';
 })
 export class TarefasService {
 
-  private readonly API = '/assets/tarefas.json';
+  private readonly API = '/api/tarefas';
 
   constructor(private http: HttpClient) { }
 

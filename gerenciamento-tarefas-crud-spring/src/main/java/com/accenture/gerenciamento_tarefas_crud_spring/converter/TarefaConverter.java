@@ -18,4 +18,14 @@ public class TarefaConverter {
         );
     }
 
+    public static Tarefa convertToEntity(TarefaDTO tarefaDTO) {
+        Tarefa tarefa = new Tarefa();
+        tarefa.setIdTarefa(tarefaDTO.idTarefa());
+        tarefa.setTituloTarefa(tarefaDTO.tituloTarefa());
+        tarefa.setDescricaoTarefa(tarefaDTO.descricaoTarefa());
+        tarefa.setDataVencimentoTarefa(tarefaDTO.dataVencimentoTarefa());
+        tarefa.setTarefaConcluida(false);
+        return tarefa;
+    }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 import static com.accenture.gerenciamento_tarefas_crud_spring.converter.TarefaConverter.convertToDTO;
+import static com.accenture.gerenciamento_tarefas_crud_spring.converter.TarefaConverter.convertToEntity;
 
 @Service
 public class TarefaService {
@@ -36,6 +37,12 @@ public class TarefaService {
         tarefa.setTarefaConcluida(!tarefa.getTarefaConcluida());
         tarefaRepository.save(tarefa);
         return convertToDTO(tarefa);
+    }
+
+    @Transactional
+    public TarefaDTO criarTarefa(TarefaDTO tarefaDTO) {
+        Tarefa tarefa = convertToEntity(tarefaDTO);
+        return convertToDTO(tarefaRepository.save(tarefa));
     }
 
 }

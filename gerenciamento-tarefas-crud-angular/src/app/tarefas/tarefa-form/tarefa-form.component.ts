@@ -8,6 +8,7 @@ import { TarefasService } from '../services/tarefas.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-tarefa-form',
@@ -34,6 +35,7 @@ export class TarefaFormComponent {
     private service: TarefasService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private location: Location,
 
   ) {
     this.form = this.formBuilder.group({
@@ -51,7 +53,7 @@ export class TarefaFormComponent {
   }
 
   onCancel() {
-
+    this.location.back();
   }
 
   private onSuccess() {

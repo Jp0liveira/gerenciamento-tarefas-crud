@@ -2,6 +2,7 @@ package com.accenture.gerenciamento_tarefas_crud_spring.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,7 +20,7 @@ public class Tarefa {
     private String descricaoTarefa;
 
     @Column(name = "data_vencimento_tarefa", nullable = false)
-    private LocalDateTime dataVencimentoTarefa;
+    private LocalDate dataVencimentoTarefa;
 
     @Column(name = "tarefa_concluida", nullable = false)
     private Boolean tarefaConcluida = false;
@@ -49,11 +50,11 @@ public class Tarefa {
         this.descricaoTarefa = descricaoTarefa;
     }
 
-    public LocalDateTime getDataVencimentoTarefa() {
+    public LocalDate getDataVencimentoTarefa() {
         return dataVencimentoTarefa;
     }
 
-    public void setDataVencimentoTarefa(LocalDateTime dataVencimentotarefa) {
+    public void setDataVencimentoTarefa(LocalDate  dataVencimentotarefa) {
         this.dataVencimentoTarefa = dataVencimentotarefa;
     }
 

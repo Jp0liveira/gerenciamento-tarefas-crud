@@ -21,12 +21,12 @@ export class TarefasService {
   }
 
   save(record: Tarefa) {
+    console.log(record);
    return this.http.post<Tarefa>(this.API, record).pipe(first());
   }
 
   marcarComoConcluida(idTarefa: string): Observable<Tarefa> {
     return this.http.patch<Tarefa>(`${this.API}/${idTarefa}/concluir`, {});
   }
-
 
 }

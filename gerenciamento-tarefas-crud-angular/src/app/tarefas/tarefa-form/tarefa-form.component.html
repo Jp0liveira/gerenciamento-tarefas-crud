@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-toolbar color="primary">Detalhes da tarefa</mat-toolbar>
+  <mat-card-content>
+    <form [formGroup]="form" class="min-width">
+      <mat-form-field class="full-width">
+        <input matInput formControlName="tituloTarefa" placeholder="Titulo"/>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput formControlName="descricaoTarefa" placeholder="Descricao"/>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput type="date" formControlName="dataVencimentoTarefa" placeholder="Data vencimento"/>
+      </mat-form-field>
+
+    </form>
+    </mat-card-content>
+
+  <mat-card-actions class="actions-center">
+    <button mat-raised-button color="primary" (click)="onSubmit()" type="submit">
+      Salvar
+    </button>
+    <button mat-raised-button (click)="onCancel()" class="btn-space" type="button">
+      Cancelar
+    </button>
+  </mat-card-actions>
+
+</mat-card>

@@ -2,42 +2,66 @@ package com.accenture.gerenciamento_tarefas_crud_spring.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Tarefa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tarefa")
-    private Long idTerafa;
+    private Long idTarefa;
 
-    @Column(name = "nome_tarefa", length = 200, nullable = false)
-    private String nomeTarefa;
+    @Column(name = "titulo_tarefa", length = 200, nullable = false)
+    private String tituloTarefa;
 
-    @Column(name = "categoria_tarefa", length = 200, nullable = false)
-    private String categoriaTarefa;
+    @Column(name = "descricao_tarefa", length = 250, nullable = false)
+    private String descricaoTarefa;
 
-    public Long getIdCategoria() {
-        return idTerafa;
+    @Column(name = "data_vencimento_tarefa", nullable = false)
+    private LocalDateTime dataVencimentoTarefa;
+
+    @Column(name = "tarefa_concluida", nullable = false)
+    private Boolean tarefaConcluida = false;
+
+
+    public Long getIdTarefa() {
+        return idTarefa;
     }
 
-    public void setIdCategoria(Long idCategoria) {
-        this.idTerafa = idCategoria;
+    public void setIdTarefa(Long idTarefa) {
+        this.idTarefa = idTarefa;
     }
 
-    public String getNomeCategoria() {
-        return nomeTarefa;
+    public String getTituloTarefa() {
+        return tituloTarefa;
     }
 
-    public void setNomeCategoria(String nomeCategoria) {
-        this.nomeTarefa = nomeCategoria;
+    public void setTituloTarefa(String tituloTarefa) {
+        this.tituloTarefa = tituloTarefa;
     }
 
-    public String getCategoriaTarefa() {
-        return categoriaTarefa;
+    public String getDescricaoTarefa() {
+        return descricaoTarefa;
     }
 
-    public void setCategoriaTarefa(String categoriaTarefa) {
-        this.categoriaTarefa = categoriaTarefa;
+    public void setDescricaoTarefa(String descricaoTarefa) {
+        this.descricaoTarefa = descricaoTarefa;
     }
 
+    public LocalDateTime getDataVencimentoTarefa() {
+        return dataVencimentoTarefa;
+    }
+
+    public void setDataVencimentoTarefa(LocalDateTime dataVencimentotarefa) {
+        this.dataVencimentoTarefa = dataVencimentotarefa;
+    }
+
+    public Boolean getTarefaConcluida() {
+        return tarefaConcluida;
+    }
+
+    public void setTarefaConcluida(Boolean tarefaConcluida) {
+        this.tarefaConcluida = tarefaConcluida;
+    }
 }

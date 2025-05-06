@@ -1,0 +1,10 @@
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Implementar CRUD de tarefas', 'Desenvolvimento');
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Criar interface Angular', 'Front-end');
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Configurar banco de dados', 'Back-end');
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Escrever testes unitários', 'Qualidade');
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Revisar código do colega', 'Colaboração');
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Documentar endpoints da API', 'Documentação');
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Atualizar dependências', 'Manutenção');
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Otimizar consultas SQL', 'Performance');
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Realizar deploy em homologação', 'DevOps');
+INSERT INTO tarefa (nome_tarefa, categoria_tarefa) VALUES ('Preparar apresentação do projeto', 'Comunicação');

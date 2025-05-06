@@ -1,72 +1,141 @@
 import { Component, OnInit } from '@angular/core';
+import {BehaviorSubject, Observable, combineLatest, of} from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+
 import { MatTableModule } from '@angular/material/table';
-import { Tarefa } from '../model/tarefa';
 import { MatCard } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
-import { TarefasService } from '../services/tarefas.service';
-import {catchError, Observable, of, switchMap, tap} from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {AsyncPipe, DatePipe, NgIf} from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
 import { MatIcon } from '@angular/material/icon';
-import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MatCheckbox} from '@angular/material/checkbox';
+import { MatIconButton, MatMiniFabButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField, MatLabel } from '@angular/material/input';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+
+import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { Tarefa } from '../model/tarefa';
+import { TarefasService } from '../services/tarefas.service';
+import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
+
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tarefas',
-  imports: [MatTableModule, MatCard, MatToolbar, MatProgressSpinnerModule, AsyncPipe, NgIf, MatIcon, MatMiniFabButton, MatIconButton, DatePipe, MatCheckbox],
+  standalone: true,
+  imports: [
+    MatTableModule,
+    MatCard,
+    MatToolbar,
+    MatProgressSpinnerModule,
+    MatIcon,
+    MatMiniFabButton,
+    MatIconButton,
+    MatCheckbox,
+    MatFormField,
+    MatOption,
+    MatSelect,
+    MatLabel,
+    AsyncPipe,
+    NgIf,
+    DatePipe,
+    FormsModule
+  ],
   templateUrl: './tarefas.component.html',
-  styleUrl: './tarefas.component.scss'
+  styleUrls: ['./tarefas.component.scss']
 })
-export class TarefasComponent implements OnInit{
-  tarefa$: Observable<Tarefa[]>;
+export class TarefasComponent implements OnInit {
+  private filtroSubject = new BehaviorSubject<string>('todas');
+  tarefas$: Observable<Tarefa[]>;
+  tarefasFiltradas$: Observable<Tarefa[]>;
 
-  displayedColumns = ['tituloTarefa', 'descricaoTarefa', 'dataVencimentoTarefa', 'tarefaConcluida', 'acoes']
+  readonly displayedColumns = [
+    'tituloTarefa',
+    'descricaoTarefa',
+    'dataVencimentoTarefa',
+    'tarefaConcluida',
+    'acoes'
+  ];
 
-  constructor(private tarefasService: TarefasService,
-              public dialog: MatDialog,
-              private router: Router,
-              private route: ActivatedRoute,
+  constructor(
+    private tarefasService: TarefasService,
+    private dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    this.tarefa$ = this.carregarTarefas();
+    this.tarefas$ = this.carregarTarefas();
+    this.tarefasFiltradas$ = this.inicializarFiltro();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  onAdd(): void {
+    this.navegarParaNovaTarefa();
   }
 
-  onError(errorMsg: string) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg
-    });
+  toggleConclusao(tarefa: Tarefa): void {
+    this.atualizarStatusTarefa(tarefa);
   }
 
-  onAdd() {
-    this.router.navigate(['nova'], { relativeTo: this.route });
+  atualizarFiltro(status: string): void {
+    this.filtroSubject.next(status);
   }
 
-  toggleConclusao(tarefa: Tarefa) {
-    this.tarefasService.marcarComoConcluida(tarefa.idTarefa).pipe(
-      tap(tarefaAtualizada => {
-        tarefa.tarefaConcluida = tarefaAtualizada.tarefaConcluida;
-      })
-    ).subscribe({
-      error: (erro) => {
-        this.onError('Ocorreu um erro ao concluir a tarefa.');
-        tarefa.tarefaConcluida = !tarefa.tarefaConcluida;
-      }
-    });
+  private inicializarFiltro(): Observable<Tarefa[]> {
+    return combineLatest([
+      this.tarefas$,
+      this.filtroSubject.asObservable()
+    ]).pipe(
+      map(([tarefas, filtro]) => this.aplicarFiltro(tarefas, filtro))
+    );
   }
 
-  carregarTarefas(): Observable<Tarefa[]> {
+  private carregarTarefas(): Observable<Tarefa[]> {
     return this.tarefasService.listarTarefas().pipe(
       catchError(error => {
-        this.onError('Ocorreu um erro ao carregar as tarefas.');
+        this.mostrarErro('Ocorreu um erro ao carregar as tarefas.');
         return of([]);
       })
     );
   }
 
+  private aplicarFiltro(tarefas: Tarefa[], filtro: string): Tarefa[] {
+    switch(filtro) {
+      case 'concluidas':
+        return tarefas.filter(t => t.tarefaConcluida);
+      case 'pendentes':
+        return tarefas.filter(t => !t.tarefaConcluida);
+      default:
+        return tarefas;
+    }
+  }
+
+  private atualizarStatusTarefa(tarefa: Tarefa): void {
+    this.tarefasService.marcarComoConcluida(tarefa.idTarefa).pipe(
+      tap(tarefaAtualizada => {
+        tarefa.tarefaConcluida = tarefaAtualizada.tarefaConcluida;
+      })
+    ).subscribe({
+      error: () => this.tratarErroAtualizacao(tarefa)
+    });
+  }
+
+  private navegarParaNovaTarefa(): void {
+    this.router.navigate(['nova'], { relativeTo: this.route });
+  }
+
+  private mostrarErro(mensagem: string): void {
+    this.dialog.open(ErrorDialogComponent, {
+      data: mensagem
+    });
+  }
+
+  private tratarErroAtualizacao(tarefa: Tarefa): void {
+    this.mostrarErro('Ocorreu um erro ao concluir a tarefa.');
+    tarefa.tarefaConcluida = !tarefa.tarefaConcluida;
+  }
 
 }

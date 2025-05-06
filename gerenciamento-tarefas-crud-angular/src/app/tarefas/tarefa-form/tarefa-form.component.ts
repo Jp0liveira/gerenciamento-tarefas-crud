@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatInput } from '@angular/material/input';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import { MatCard, MatCardActions, MatCardContent } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButton } from '@angular/material/button';
@@ -19,7 +19,8 @@ import { ErrorDialogComponent } from '../../shared/components/error-dialog/error
     MatToolbar,
     MatCardContent,
     MatCardActions,
-    MatButton
+    MatButton,
+    MatLabel
   ],
   templateUrl: './tarefa-form.component.html',
   styleUrl: './tarefa-form.component.scss'

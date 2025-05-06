@@ -1,29 +1,30 @@
-<mat-card>
-  <mat-toolbar color="primary">Detalhes da tarefa</mat-toolbar>
+<mat-card class="task-detail-card">
+  <mat-toolbar color="primary" class="card-toolbar">Detalhes da tarefa</mat-toolbar>
   <mat-card-content>
-    <form [formGroup]="form" class="min-width">
-      <mat-form-field class="full-width">
-        <input matInput formControlName="tituloTarefa" placeholder="Titulo"/>
+    <form [formGroup]="form" class="task-form">
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="tituloTarefa">
       </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <input matInput formControlName="descricaoTarefa" placeholder="Descricao"/>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput formControlName="descricaoTarefa" rows="2"></textarea>
       </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <input matInput type="date" formControlName="dataVencimentoTarefa" placeholder="Data vencimento"/>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Data de vencimento</mat-label>
+        <input matInput type="date" formControlName="dataVencimentoTarefa">
       </mat-form-field>
-
     </form>
-    </mat-card-content>
+  </mat-card-content>
 
-  <mat-card-actions class="actions-center">
-    <button mat-raised-button color="primary" (click)="onSubmit()" type="submit">
+  <mat-card-actions class="card-actions">
+    <button mat-raised-button color="primary" (click)="onSubmit()" class="action-button" type="submit">
       Salvar
     </button>
-    <button mat-raised-button (click)="onCancel()" class="btn-space" type="button">
+    <button mat-raised-button (click)="onCancel()" class="action-button cancel-button" type="button">
       Cancelar
     </button>
   </mat-card-actions>
-
 </mat-card>

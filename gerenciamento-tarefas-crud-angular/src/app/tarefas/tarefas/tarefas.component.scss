@@ -1,18 +1,133 @@
-mat-card {
-  max-width: 80%;
-  margin: 2em auto;
-  text-align: center;
+.responsive-card {
+  margin: 1em auto;
+  width: 95%;
+  max-width: 1200px;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
+.responsive-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+
+  @media (max-width: 600px) {
+    padding: 0 8px;
+  }
+}
+
+.desktop-filter {
+  padding: 16px;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+
+  mat-form-field {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+.mobile-filter {
+  display: none;
+  width: 150px;
+
+  @media (max-width: 600px) {
+    display: block;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.responsive-table {
+  width: 100%;
+  min-width: 600px;
+
+  .mat-header-cell, .mat-cell {
+    padding: 8px 16px;
+
+    @media (max-width: 960px) {
+      padding: 8px 12px;
+    }
+
+    @media (max-width: 600px) {
+      padding: 6px 8px;
+    }
+  }
+
+  .status-text {
+    @media (max-width: 960px) {
+      display: none;
+    }
+  }
+
+  .action-column {
+    flex: 0 0 120px;
+
+    @media (max-width: 960px) {
+      flex: 0 0 90px;
+    }
+
+    @media (max-width: 600px) {
+      flex: 0 0 80px;
+    }
+  }
+
+  .action-column-header {
+    justify-content: center;
+  }
 }
 
 .loading-spinner {
   padding: 25px;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.015);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-mat-form-field {
-  padding: 15px;
-  width: 300px;
+.cdk-header-cell {
+  font-weight: bold;
+  background-color: #f5f5f5;
 }
+
+.mat-row {
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #fafafa;
+  }
+}
+
+@media (max-width: 600px) {
+  .mobile-cards {
+    display: block;
+
+    mat-card {
+      margin: 8px;
+      padding: 16px;
+
+      mat-card-title {
+        font-size: 1.1em;
+      }
+
+      mat-card-content {
+        padding: 8px 0;
+      }
+    }
+  }
+}
+

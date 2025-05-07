@@ -19,6 +19,7 @@ import {TarefasService} from '../../services/tarefas.service';
 import {ErrorDialogComponent} from '../../../shared/components/error-dialog/error-dialog.component';
 import {TarefasListComponent} from '../../components/tarefas-list/tarefas-list.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tarefas',
@@ -49,7 +50,8 @@ export class TarefasComponent implements OnInit {
     private tarefasService: TarefasService,
     private dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
   ) {
     this.tarefas$ = this.carregarTarefas();
     this.tarefasFiltradas$ = this.inicializarFiltro();
@@ -73,7 +75,7 @@ export class TarefasComponent implements OnInit {
   private carregarTarefas(): Observable<Tarefa[]> {
     return this.tarefasService.listarTarefas().pipe(
       catchError(error => {
-        this.mostrarErro('Ocorreu um erro ao carregar as tarefas.');
+        this.onError('Ocorreu um erro ao carregar as tarefas.');
         return of([]);
       })
     );
@@ -90,10 +92,9 @@ export class TarefasComponent implements OnInit {
     }
   }
 
-  private mostrarErro(mensagem: string): void {
-    this.dialog.open(ErrorDialogComponent, {
-      data: mensagem
-    });
+  refresh(){
+    this.tarefas$ = this.carregarTarefas();
+    this.tarefasFiltradas$ = this.inicializarFiltro();
   }
 
   onAdd(): void {
@@ -102,6 +103,28 @@ export class TarefasComponent implements OnInit {
 
   onEdit(tarefa: Tarefa) {
     this.router.navigate(['editar', tarefa.idTarefa], { relativeTo: this.route });
+  }
+
+  onDelete(tarefa: Tarefa) {
+    this.tarefasService.delete(tarefa.idTarefa).subscribe({
+      next: () => this.onSuccess(),
+      error: () => this.onError('Ocorreu um erro ao excluir a tarefa.')
+    });
+  }
+
+  private onSuccess() {
+    this.snackBar.open('Tarefa exluída com sucesso!', 'X', {
+      duration: 5000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
+    });
+    this.refresh();
+  }
+
+  private onError(mensagem: string) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: mensagem
+    });
   }
 
 }

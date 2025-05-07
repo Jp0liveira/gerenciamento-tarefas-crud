@@ -43,4 +43,8 @@ export class TarefasService {
     return this.http.put<Tarefa>(`${this.API}/${record.idTarefa}`, record).pipe(first());
   }
 
+  delete(idTarefa: string){
+    return this.http.delete(`${this.API}/${idTarefa}`).pipe(first());
+  }
+
 }

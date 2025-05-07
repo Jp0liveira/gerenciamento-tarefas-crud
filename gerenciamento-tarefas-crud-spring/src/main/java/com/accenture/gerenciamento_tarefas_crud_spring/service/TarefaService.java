@@ -59,6 +59,12 @@ public class TarefaService {
     }
 
     @Transactional
+    public void delete(Long idTarefa) {
+        Tarefa tarefa = findTarefaByIdOrThrow(idTarefa);
+        tarefaRepository.delete(tarefa);
+    }
+
+    @Transactional
     public TarefaDTO toggleConclusao(Long idTarefa) {
         Tarefa tarefa = findTarefaByIdOrThrow(idTarefa);
         tarefa.setTarefaConcluida(!tarefa.getTarefaConcluida());

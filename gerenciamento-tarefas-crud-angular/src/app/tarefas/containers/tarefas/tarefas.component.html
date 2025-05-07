@@ -28,6 +28,7 @@
     [tarefas]="tarefas"
     (add)="onAdd()"
     (edit)="onEdit($event)"
+    (remove)="onDelete($event)"
   ></app-tarefas-list>
 
   <ng-template #loading>

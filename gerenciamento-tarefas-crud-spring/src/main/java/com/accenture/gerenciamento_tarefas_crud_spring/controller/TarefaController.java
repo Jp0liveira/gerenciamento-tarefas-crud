@@ -44,4 +44,10 @@ public class TarefaController {
         return ResponseEntity.ok(tarefaService.update(idTerafa, tarefaDTO));
     }
 
+    @DeleteMapping("/{idTarefa}")
+    public ResponseEntity<Void> delete(@PathVariable Long idTarefa) {
+        tarefaService.delete(idTarefa);
+        return ResponseEntity.noContent().build();
+    }
+
 }

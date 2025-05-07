@@ -45,6 +45,7 @@ export class TarefasListComponent implements OnInit{
   @Input() tarefas: Tarefa[] = [];
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
+  @Output() remove = new EventEmitter(false);
 
   readonly displayedColumns = [
     'tituloTarefa',
@@ -93,6 +94,10 @@ export class TarefasListComponent implements OnInit{
 
   onEdit(tarefa: Tarefa) {
     this.edit.emit(tarefa);
+  }
+
+  onDelete(tarefa: Tarefa) {
+    this.remove.emit(tarefa);
   }
 
 }

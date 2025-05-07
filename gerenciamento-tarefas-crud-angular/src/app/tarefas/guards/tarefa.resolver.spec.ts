@@ -1,17 +1,56 @@
 import { TestBed } from '@angular/core/testing';
-import { ResolveFn } from '@angular/router';
+import { TarefaResolver } from './tarefa.resolver';
+import { TarefasService } from '../services/tarefas.service';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { Tarefa } from '../model/tarefa';
 
-import { tarefaResolver } from './tarefa.resolver';
+describe('TarefaResolver', () => {
+  let resolver: TarefaResolver;
+  let mockTarefasService: jasmine.SpyObj<TarefasService>;
+  const mockRoute = { params: {} } as ActivatedRouteSnapshot;
+  const mockState = {} as RouterStateSnapshot;
 
-describe('tarefaResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) => 
-      TestBed.runInInjectionContext(() => tarefaResolver(...resolverParameters));
+  const mockTarefa: Tarefa = {
+    idTarefa: '1',
+    tituloTarefa: 'Tarefa Teste',
+    descricaoTarefa: 'Descrição Teste',
+    dataVencimentoTarefa: new Date(),
+    tarefaConcluida: false
+  };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    mockTarefasService = jasmine.createSpyObj('TarefasService', ['loadById']);
+
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: TarefasService, useValue: mockTarefasService }
+      ]
+    });
+
+    resolver = TestBed.inject(TarefaResolver);
   });
 
-  it('should be created', () => {
-    expect(executeResolver).toBeTruthy();
+  it('deve ser criado', () => {
+    expect(resolver).toBeTruthy();
   });
+
+  describe('quando há idTarefa nos parâmetros', () => {
+    it('deve carregar a tarefa pelo ID', (done: DoneFn) => {
+      mockRoute.params = { idTarefa: '1' };
+
+      mockTarefasService.loadById.and.returnValue(of(mockTarefa) as Observable<Tarefa>);
+
+      (resolver.resolve(mockRoute, mockState) as Observable<Tarefa>).subscribe({
+        next: (result) => {
+          expect(result).toEqual(mockTarefa);
+          done();
+        },
+        error: done.fail
+      });
+
+      expect(mockTarefasService.loadById).toHaveBeenCalledWith('1');
+    });
+  });
+
 });

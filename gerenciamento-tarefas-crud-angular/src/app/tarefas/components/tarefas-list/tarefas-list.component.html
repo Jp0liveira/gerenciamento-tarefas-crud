@@ -1,0 +1,47 @@
+<mat-table [dataSource]="tarefas" class="responsive-table">
+
+  <ng-container matColumnDef="tituloTarefa">
+    <mat-header-cell *matHeaderCellDef> Título </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.tituloTarefa}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="descricaoTarefa">
+    <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.descricaoTarefa}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="dataVencimentoTarefa">
+    <mat-header-cell *matHeaderCellDef> Vencimento </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.dataVencimentoTarefa | date:'dd/MM/yyyy'}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="tarefaConcluida">
+    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <mat-checkbox
+        [checked]="element.tarefaConcluida"
+        (change)="toggleConclusao(element)">
+      </mat-checkbox>
+      <span class="status-text">{{ element.tarefaConcluida ? 'Concluída' : 'Pendente' }}</span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="acoes">
+    <mat-header-cell *matHeaderCellDef class="action-column-header">
+      <button mat-mini-fab color="primary" aria-label="Adicionar Tarefas" (click)="onAdd()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="action-column">
+      <button mat-icon-button color="primary" aria-label="Editar Tarefas">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" aria-label="Excluir Tarefas">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

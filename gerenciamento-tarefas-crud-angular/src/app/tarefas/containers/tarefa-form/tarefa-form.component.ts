@@ -4,10 +4,10 @@ import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import { MatCard, MatCardActions, MatCardContent } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButton } from '@angular/material/button';
-import { TarefasService } from '../services/tarefas.service';
+import { TarefasService } from '../../services/tarefas.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
+import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
 import { Location } from '@angular/common';
 
 @Component({
@@ -36,7 +36,6 @@ export class TarefaFormComponent {
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private location: Location,
-
   ) {
     this.form = this.formBuilder.group({
       tituloTarefa: [null],
@@ -67,6 +66,5 @@ export class TarefaFormComponent {
     });
     console.log(this.form.value);
   }
-
 
 }

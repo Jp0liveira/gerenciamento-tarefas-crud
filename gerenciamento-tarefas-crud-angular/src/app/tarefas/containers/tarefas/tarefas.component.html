@@ -27,6 +27,7 @@
     *ngIf="tarefasFiltradas$ | async as tarefas; else loading" class="table-container"
     [tarefas]="tarefas"
     (add)="onAdd()"
+    (edit)="onEdit($event)"
   ></app-tarefas-list>
 
   <ng-template #loading>

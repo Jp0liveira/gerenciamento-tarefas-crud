@@ -1,7 +1,6 @@
 package com.accenture.gerenciamento_tarefas_crud_spring.controller;
 
 import com.accenture.gerenciamento_tarefas_crud_spring.dto.TarefaDTO;
-import com.accenture.gerenciamento_tarefas_crud_spring.entity.Tarefa;
 import com.accenture.gerenciamento_tarefas_crud_spring.service.TarefaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,15 +24,24 @@ public class TarefaController {
     }
 
     @PatchMapping("/{idTerafa}/concluir")
-    public ResponseEntity<TarefaDTO> marcarComoConcluida(@PathVariable Long idTerafa) {
-        return ResponseEntity.ok(tarefaService.marcarComoConcluida(idTerafa));
+    public ResponseEntity<TarefaDTO> toggleConclusao(@PathVariable Long idTerafa) {
+        return ResponseEntity.ok(tarefaService.toggleConclusao(idTerafa));
     }
 
     @PostMapping
-    public ResponseEntity<TarefaDTO> criarTarefa(@RequestBody TarefaDTO tarefaDTO) {
+    public ResponseEntity<TarefaDTO> create(@RequestBody TarefaDTO tarefaDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(tarefaService.criarTarefa(tarefaDTO));
+                .body(tarefaService.create(tarefaDTO));
     }
 
+    @GetMapping("/{idTerafa}")
+    public ResponseEntity<TarefaDTO> findById(@PathVariable Long idTerafa) {
+        return ResponseEntity.ok(tarefaService.findById(idTerafa));
+    }
+
+    @PutMapping("/{idTerafa}")
+    public ResponseEntity<TarefaDTO> update(@PathVariable Long idTerafa, @RequestBody TarefaDTO tarefaDTO) {
+        return ResponseEntity.ok(tarefaService.update(idTerafa, tarefaDTO));
+    }
 
 }

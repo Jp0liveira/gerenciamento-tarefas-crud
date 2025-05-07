@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, NonNullableFormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import { MatCard, MatCardActions, MatCardContent } from '@angular/material/card';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatButton } from '@angular/material/button';
-import { TarefasService } from '../../services/tarefas.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
-import { Location } from '@angular/common';
+import {MatCard, MatCardActions, MatCardContent} from '@angular/material/card';
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatButton} from '@angular/material/button';
+import {TarefasService} from '../../services/tarefas.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {ErrorDialogComponent} from '../../../shared/components/error-dialog/error-dialog.component';
+import {Location} from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
+import {Tarefa} from '../../model/tarefa';
 
 @Component({
   selector: 'app-tarefa-form',
@@ -26,9 +28,9 @@ import { Location } from '@angular/common';
   templateUrl: './tarefa-form.component.html',
   styleUrl: './tarefa-form.component.scss'
 })
-export class TarefaFormComponent {
+export class TarefaFormComponent implements OnInit{
 
-  form: FormGroup;
+  form!: FormGroup;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -36,11 +38,17 @@ export class TarefaFormComponent {
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private location: Location,
-  ) {
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    const tarefa: Tarefa = this.route.snapshot.data['tarefa'];
     this.form = this.formBuilder.group({
-      tituloTarefa: [null],
-      descricaoTarefa: [null],
-      dataVencimentoTarefa: [null]
+      idTarefa: [tarefa.idTarefa],
+      tituloTarefa: [tarefa.tituloTarefa],
+      descricaoTarefa: [tarefa.descricaoTarefa],
+      dataVencimentoTarefa: [tarefa.dataVencimentoTarefa],
+      tarefaConcluida: [tarefa.tarefaConcluida]
     });
   }
 

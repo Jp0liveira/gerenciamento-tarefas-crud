@@ -44,6 +44,7 @@ export class TarefasListComponent implements OnInit{
 
   @Input() tarefas: Tarefa[] = [];
   @Output() add = new EventEmitter(false);
+  @Output() edit = new EventEmitter(false);
 
   readonly displayedColumns = [
     'tituloTarefa',
@@ -59,10 +60,6 @@ export class TarefasListComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-  }
-
-  onAdd(): void {
-    this.add.emit(true);
   }
 
   toggleConclusao(tarefa: Tarefa): void {
@@ -88,6 +85,14 @@ export class TarefasListComponent implements OnInit{
     this.dialog.open(ErrorDialogComponent, {
       data: mensagem
     });
+  }
+
+  onAdd(): void {
+    this.add.emit(true);
+  }
+
+  onEdit(tarefa: Tarefa) {
+    this.edit.emit(tarefa);
   }
 
 }

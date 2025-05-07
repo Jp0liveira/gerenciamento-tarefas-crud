@@ -97,11 +97,11 @@ export class TarefasComponent implements OnInit {
   }
 
   onAdd(): void {
-    this.navegarParaNovaTarefa();
+    this.router.navigate(['nova'], { relativeTo: this.route });
   }
 
-  private navegarParaNovaTarefa(): void {
-    this.router.navigate(['nova'], { relativeTo: this.route });
+  onEdit(tarefa: Tarefa) {
+    this.router.navigate(['editar', tarefa.idTarefa], { relativeTo: this.route });
   }
 
 }

@@ -27,7 +27,8 @@ describe('TarefasComponent', () => {
   beforeEach(async () => {
     mockTarefasService = jasmine.createSpyObj('TarefasService', {
       listarTarefas: of(mockTarefas),
-      delete: of(null)
+      delete: of(null),
+      marcarComoConcluida: of({ ...mockTarefas[0], tarefaConcluida: true })
     });
     mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
@@ -152,5 +153,30 @@ describe('TarefasComponent', () => {
       expect(mockTarefasService.listarTarefas).toHaveBeenCalledTimes(1);
     }));
   });
+
+  it('deveria chamar marcarComoConcluida e atualizar tarefaConcluida em caso de sucesso', fakeAsync(() => {
+    const tarefa = mockTarefas[0];
+    const updatedTarefa = { ...tarefa, tarefaConcluida: true };
+    mockTarefasService.marcarComoConcluida.and.returnValue(of(updatedTarefa));
+
+    component.toggleConclusao(tarefa);
+    tick();
+
+    expect(mockTarefasService.marcarComoConcluida).toHaveBeenCalledWith('1');
+    expect(tarefa.tarefaConcluida).toBeTrue();
+  }));
+
+  it('deve abrir ErrorDialogComponent e reverter o status em caso de erro', fakeAsync(() => {
+    const tarefa = mockTarefas[0];
+    mockTarefasService.marcarComoConcluida.and.returnValue(throwError(() => new Error('Error')));
+
+    component.toggleConclusao(tarefa);
+    tick();
+
+    expect(mockDialog.open).toHaveBeenCalledWith(ErrorDialogComponent, {
+      data: 'Ocorreu um erro ao concluir a tarefa.'
+    });
+    expect(tarefa.tarefaConcluida).toBeFalse();
+  }));
 
 });

@@ -1,21 +1,21 @@
 <mat-table [dataSource]="tarefas" class="responsive-table">
 
-  <ng-container matColumnDef="tituloTarefa">
+  <ng-container matColumnDef="tituloTarefa" id="titulo-tarefa">
     <mat-header-cell *matHeaderCellDef> Título </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.tituloTarefa}} </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="descricaoTarefa">
+  <ng-container matColumnDef="descricaoTarefa" id="descricao-tarefa">
     <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.descricaoTarefa}} </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="dataVencimentoTarefa">
+  <ng-container matColumnDef="dataVencimentoTarefa" id="data-tarefa">
     <mat-header-cell *matHeaderCellDef> Vencimento </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.dataVencimentoTarefa | date:'dd/MM/yyyy'}} </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="tarefaConcluida">
+  <ng-container matColumnDef="tarefaConcluida" id="tarefa-concluida">
     <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
     <mat-cell *matCellDef="let element">
       <mat-checkbox
@@ -27,16 +27,16 @@
   </ng-container>
 
   <ng-container matColumnDef="acoes">
-    <mat-header-cell *matHeaderCellDef class="action-column-header">
+    <mat-header-cell *matHeaderCellDef class="action-column-header" id="adicionar-tarefa">
       <button mat-mini-fab color="primary" aria-label="Adicionar Tarefas" (click)="onAdd()">
         <mat-icon>add</mat-icon>
       </button>
     </mat-header-cell>
     <mat-cell *matCellDef="let element" class="action-column">
-      <button mat-icon-button color="primary" aria-label="Editar Tarefas" (click)="onEdit(element)">
+      <button mat-icon-button color="primary" aria-label="Editar Tarefas" (click)="onEdit(element)" id="editar-tarefa">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" aria-label="Excluir Tarefas" (click)="onDelete(element)">
+      <button mat-icon-button color="warn" aria-label="Excluir Tarefas" (click)="onDelete(element)" id="deletar-tarefa">
         <mat-icon>delete</mat-icon>
       </button>
     </mat-cell>

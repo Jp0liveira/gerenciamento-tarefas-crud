@@ -6,14 +6,10 @@ import com.accenture.gerenciamento_tarefas_crud_spring.entity.Tarefa;
 import com.accenture.gerenciamento_tarefas_crud_spring.exception.TarefaNotFoundException;
 import com.accenture.gerenciamento_tarefas_crud_spring.repository.TarefaRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.accenture.gerenciamento_tarefas_crud_spring.converter.TarefaConverter.convertToDTO;
 
 @Service
 public class TarefaService {

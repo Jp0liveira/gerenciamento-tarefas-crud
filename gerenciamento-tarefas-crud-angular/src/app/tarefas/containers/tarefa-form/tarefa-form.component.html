@@ -2,17 +2,17 @@
   <mat-toolbar color="primary" class="card-toolbar">Detalhes da tarefa</mat-toolbar>
   <mat-card-content>
     <form [formGroup]="form" class="task-form">
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field appearance="fill" class="form-field" id="titulo-tarefa-form">
         <mat-label>Título</mat-label>
         <input matInput formControlName="tituloTarefa">
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field appearance="fill" class="form-field" id="descricao-tarefa-form">
         <mat-label>Descrição</mat-label>
         <textarea matInput formControlName="descricaoTarefa" rows="2"></textarea>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field appearance="fill" class="form-field" id="data-tarefa-form">
         <mat-label>Data de vencimento</mat-label>
         <input matInput type="date" formControlName="dataVencimentoTarefa">
       </mat-form-field>
@@ -20,10 +20,10 @@
   </mat-card-content>
 
   <mat-card-actions class="card-actions">
-    <button mat-raised-button color="primary" (click)="onSubmit()" class="action-button" type="submit">
+    <button mat-raised-button color="primary" (click)="onSubmit()" class="action-button" type="submit" id="salvar">
       Salvar
     </button>
-    <button mat-raised-button (click)="onCancel()" class="action-button cancel-button" type="button">
+    <button mat-raised-button (click)="onCancel()" class="action-button cancel-button" type="button" id="cancelar">
       Cancelar
     </button>
   </mat-card-actions>

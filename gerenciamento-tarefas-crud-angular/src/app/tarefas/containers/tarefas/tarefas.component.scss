@@ -25,70 +25,9 @@
   }
 }
 
-.desktop-filter {
+.filter{
   padding: 16px;
-
-  @media (max-width: 600px) {
-    display: none;
-  }
-
-  mat-form-field {
-    width: 100%;
-    max-width: 300px;
-  }
-}
-
-.mobile-filter {
-  display: none;
-  width: 150px;
-
-  @media (max-width: 600px) {
-    display: block;
-  }
-}
-
-.table-container {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.responsive-table {
-  width: 100%;
-  min-width: 600px;
-
-  .mat-header-cell, .mat-cell {
-    padding: 8px 16px;
-
-    @media (max-width: 960px) {
-      padding: 8px 12px;
-    }
-
-    @media (max-width: 600px) {
-      padding: 6px 8px;
-    }
-  }
-
-  .status-text {
-    @media (max-width: 960px) {
-      display: none;
-    }
-  }
-
-  .action-column {
-    flex: 0 0 120px;
-
-    @media (max-width: 960px) {
-      flex: 0 0 90px;
-    }
-
-    @media (max-width: 600px) {
-      flex: 0 0 80px;
-    }
-  }
-
-  .action-column-header {
-    justify-content: center;
-  }
+  max-width: 300px;
 }
 
 .loading-spinner {

@@ -1,0 +1,62 @@
+.responsive-table {
+  width: 100%;
+}
+
+.responsive-table mat-header-cell,
+.responsive-table mat-cell {
+  white-space: normal;
+  word-wrap: break-word;
+  padding: 8px 12px;
+  vertical-align: top;
+}
+
+@media (max-width: 599px) {
+  .responsive-table {
+    display: block;
+    border: none;
+  }
+
+  .responsive-table mat-header-row,
+  .responsive-table mat-row {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    margin: 12px 12px;
+    border-radius: 8px;
+    padding: 8px;
+    background: white;
+  }
+
+  .responsive-table mat-header-cell,
+  .responsive-table mat-cell {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .responsive-table mat-header-cell::after {
+    content: ":";
+    margin-left: 4px;
+  }
+  .responsive-table mat-header-row {
+    display: none;
+  }
+
+  .responsive-table .action-column {
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 8px;
+    border-bottom: none;
+  }
+
+  .responsive-table .action-column-header {
+    display: none;
+  }
+
+  .responsive-table .status-text {
+    margin-left: 8px;
+    font-style: italic;
+    color: #666;
+  }
+}

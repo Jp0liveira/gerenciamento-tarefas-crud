@@ -3,7 +3,6 @@ package com.accenture.gerenciamento_tarefas_crud_spring.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 public class Tarefa {

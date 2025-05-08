@@ -10,11 +10,4 @@ public class TarefaNotFoundException extends RuntimeException{
         super("Tarefa não encontrada com o ID: " + idTarefa);
     }
 
-    public TarefaNotFoundException(String message) {
-        super(message);
-    }
-
-    public TarefaNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

@@ -46,6 +46,7 @@ export class TarefasListComponent implements OnInit{
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
+  @Output() completed = new EventEmitter(false);
 
   readonly displayedColumns = [
     'tituloTarefa',
@@ -55,37 +56,9 @@ export class TarefasListComponent implements OnInit{
     'acoes'
   ];
 
-  constructor(
-    private tarefasService: TarefasService,
-    private dialog: MatDialog
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  toggleConclusao(tarefa: Tarefa): void {
-    this.atualizarStatusTarefa(tarefa);
-  }
-
-  private atualizarStatusTarefa(tarefa: Tarefa): void {
-    this.tarefasService.marcarComoConcluida(tarefa.idTarefa).pipe(
-      tap(tarefaAtualizada => {
-        tarefa.tarefaConcluida = tarefaAtualizada.tarefaConcluida;
-      })
-    ).subscribe({
-      error: () => this.tratarErroAtualizacao(tarefa)
-    });
-  }
-
-  private tratarErroAtualizacao(tarefa: Tarefa): void {
-    this.mostrarErro('Ocorreu um erro ao concluir a tarefa.');
-    tarefa.tarefaConcluida = !tarefa.tarefaConcluida;
-  }
-
-  private mostrarErro(mensagem: string): void {
-    this.dialog.open(ErrorDialogComponent, {
-      data: mensagem
-    });
   }
 
   onAdd(): void {
@@ -98,6 +71,10 @@ export class TarefasListComponent implements OnInit{
 
   onDelete(tarefa: Tarefa) {
     this.remove.emit(tarefa);
+  }
+
+  toggleConclusao(tarefa: Tarefa): void {
+    this.completed.emit(tarefa);
   }
 
 }

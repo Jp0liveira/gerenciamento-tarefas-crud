@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 
 import {MatTableModule} from '@angular/material/table';
 import {MatCard} from '@angular/material/card';
@@ -110,6 +110,25 @@ export class TarefasComponent implements OnInit {
       next: () => this.onSuccess(),
       error: () => this.onError('Ocorreu um erro ao excluir a tarefa.')
     });
+  }
+
+  toggleConclusao(tarefa: Tarefa): void {
+    this.atualizarStatusTarefa(tarefa);
+  }
+
+  private atualizarStatusTarefa(tarefa: Tarefa): void {
+    this.tarefasService.marcarComoConcluida(tarefa.idTarefa).pipe(
+      tap(tarefaAtualizada => {
+        tarefa.tarefaConcluida = tarefaAtualizada.tarefaConcluida;
+      })
+    ).subscribe({
+      error: () => this.tratarErroAtualizacao(tarefa)
+    });
+  }
+
+  private tratarErroAtualizacao(tarefa: Tarefa): void {
+    this.onError('Ocorreu um erro ao concluir a tarefa.');
+    tarefa.tarefaConcluida = !tarefa.tarefaConcluida;
   }
 
   private onSuccess() {

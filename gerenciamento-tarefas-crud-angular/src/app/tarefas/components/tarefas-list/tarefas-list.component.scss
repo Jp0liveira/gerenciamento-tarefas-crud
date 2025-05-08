@@ -39,19 +39,12 @@
     content: ":";
     margin-left: 4px;
   }
-  .responsive-table mat-header-row {
-    display: none;
-  }
 
   .responsive-table .action-column {
     justify-content: flex-end;
     gap: 8px;
     padding-top: 8px;
     border-bottom: none;
-  }
-
-  .responsive-table .action-column-header {
-    display: none;
   }
 
   .responsive-table .status-text {
